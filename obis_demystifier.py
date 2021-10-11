@@ -4,8 +4,13 @@ import sys, argparse
 
 def obis_dec_to_hex(obis):
     converted = ""
+    obis = obis.replace(':', '.')
+    obis = obis.replace('-', '.')
     for chunk in obis.split('.'):
-        converted += hex(int(chunk))[2:]
+        temp = hex(int(chunk))[2:]
+        if len(temp) == 1:
+            temp = '0' + temp
+        converted += temp
     return converted
 
 
