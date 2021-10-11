@@ -36,7 +36,7 @@ def convert_obis(obis):
         return obis_hex_to_dec(obis)
 
 
-def main(argv):
+def main():
     parser = argparse.ArgumentParser("obis_demystifier")
     parser.add_argument("obis",
                         help="The obis that you want information on either in period separated decimal or hex",
@@ -52,4 +52,4 @@ def main(argv):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    main(sys.argv[1:])
+    main()
