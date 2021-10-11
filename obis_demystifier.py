@@ -1,4 +1,5 @@
 #!/usr/local/bin/python3
+import os
 import sys, argparse
 
 
@@ -15,13 +16,17 @@ def obis_dec_to_hex(obis):
 
 
 def obis_hex_to_dec(obis):
+    if len(obis) != 10:
+        raise AttributeError("Hex obis should be 10 chars long!")
     converted = ""
-    n = 2
-    chunks = [obis[i:i + n] for i in range(0, len(obis), n)]
-    for chunk in chunks:
-        converted += str(int(chunk, 16)) + '.'
 
-    return converted[:-1]
+    converted += str(int(obis[0:2], 16)) + '-'
+    converted += str(int(obis[2:4], 16)) + ':'
+    converted += str(int(obis[4:6], 16)) + '.'
+    converted += str(int(obis[6:8], 16)) + '.'
+    converted += str(int(obis[8:10], 16))
+
+    return converted
 
 
 def convert_obis(obis):
@@ -37,8 +42,12 @@ def main(argv):
                         help="The obis that you want information on either in period separated decimal or hex",
                         type=str)
     args = parser.parse_args()
-    converted = convert_obis(args.obis)
-    print(converted)
+    try:
+        converted = convert_obis(args.obis)
+        print("Converted OBIS: " + converted)
+    except AttributeError as err:
+        print(err)
+        exit(os.EX_USAGE)
 
 
 # Press the green button in the gutter to run the script.
